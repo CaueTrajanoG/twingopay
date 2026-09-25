@@ -1,10 +1,11 @@
 package br.edu.ifpb.pweb2.twingopay.model;
 
 import java.io.Serializable;
-
+import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
+import br.edu.ifpb.pweb2.twingopay.enuns.Movimento;
 import br.edu.ifpb.pweb2.twingopay.enuns.TipoConta;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -53,6 +54,19 @@ public class Conta implements Serializable {
 
     public Conta(Correntista correntista) {
         this.correntista = correntista;
+    }
+
+    public BigDecimal getSaldo() {
+        BigDecimal total = BigDecimal.ZERO;
+        for (Transacao t : this.transacoes) {
+
+            if (t.getMovimento() == Movimento.DEBITO) {
+                total = total.subtract(t.getValor());
+            } else {
+                total = total.add(t.getValor());
+            }
+        }
+        return total;
     }
 
 }
