@@ -16,7 +16,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-
+import jakarta.persistence.Table;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,6 +24,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
+@Table(name = "tb_conta")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -59,7 +60,6 @@ public class Conta implements Serializable {
     public BigDecimal getSaldo() {
         BigDecimal total = BigDecimal.ZERO;
         for (Transacao t : this.transacoes) {
-
             if (t.getMovimento() == Movimento.DEBITO) {
                 total = total.subtract(t.getValor());
             } else {
