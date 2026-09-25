@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Formulario Correntista</title>
 </head>
 <body>
-    <form th:action="@{/correntistas/save}" method="POST" th:object="${Correntista}">
+    <form th:action="@{/correntistas/save}" method="POST" th:object="${correntista}">
         <input type="hidden" th:field="*{id}"/>
         <label for="item">Nome</label>
-        <input type="text" th:field="*{Nome}"/>
+        <input type="text" th:field="*{nome}"/>
         <label for="item">Senha</label>
         <input type="text" th:field="*{senha}"/>
         <button type="submit">Cadastrar correntista</button>

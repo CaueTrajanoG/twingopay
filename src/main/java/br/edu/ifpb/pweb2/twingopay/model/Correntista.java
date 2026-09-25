@@ -15,7 +15,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@Table(name = "tb_Correntinta")
+@Table(name = "tb_correntista")
 @Getter
 @Setter
 @NoArgsConstructor
