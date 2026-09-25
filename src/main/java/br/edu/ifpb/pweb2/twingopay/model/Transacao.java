@@ -1,33 +1,44 @@
 package br.edu.ifpb.pweb2.twingopay.model;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-import org.springframework.web.bind.annotation.Mapping;
-
 import br.edu.ifpb.pweb2.twingopay.enuns.Movimento;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
-import lombok.Data;
+import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 @Entity
-@Data
-public class Transacao implements Serializable {
+@Table(name = "tb_transacao")
+@Getter
+@Setter
+@NoArgsConstructor
+@ToString(exclude = "conta")
+public class Transacao {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    private LocalDate data;
     private String descricao;
     private BigDecimal valor;
-    private Movimento movimento;
-    private LocalDate data;
 
-    @ManyToOne
-    private Conta conta;
+    @Enumerated(EnumType.STRING)
+    private Movimento movimento;
 
     @ManyToOne
     private Categoria categoria;
+
+    @ManyToOne
+    private Conta conta;
 }

@@ -28,6 +28,6 @@ public class Correntista {
     private String nome;
     private String senha;
 
-    @OneToMany(mappedBy = "correntista")
+    @OneToMany(mappedBy = "correntista", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Conta> contas;
 }

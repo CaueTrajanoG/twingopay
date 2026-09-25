@@ -1,9 +1,7 @@
 package br.edu.ifpb.pweb2.twingopay.model;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 import br.edu.ifpb.pweb2.twingopay.enuns.Movimento;
 import br.edu.ifpb.pweb2.twingopay.enuns.TipoConta;
@@ -29,33 +27,24 @@ import lombok.ToString;
 @Setter
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@ToString(exclude = { "transacoes", "correntista" })
-public class Conta implements Serializable {
-
-    private static final long serialVersionUID = 1L;
+@ToString(exclude = {"transacoes", "correntista"})
+public class Conta {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @EqualsAndHashCode.Include
     private Integer id;
 
     private String numero;
     private String descricao;
-
     @Enumerated(EnumType.STRING)
-    private TipoConta tipo; // CORRENTE ou CARTAO
-
-    private Integer diaFechamento; // só usado quando tipo == CARTAO
+    private TipoConta tipo;
+    private Integer diaFechamento; // usamos quando é tipo cartão
 
     @ManyToOne
     private Correntista correntista;
 
     @OneToMany(mappedBy = "conta", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Transacao> transacoes = new HashSet<>();
-
-    public Conta(Correntista correntista) {
-        this.correntista = correntista;
-    }
+    private List<Transacao> transacoes;
 
     public BigDecimal getSaldo() {
         BigDecimal total = BigDecimal.ZERO;

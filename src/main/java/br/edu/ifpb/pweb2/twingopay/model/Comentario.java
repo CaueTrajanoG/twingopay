@@ -1,31 +1,29 @@
 package br.edu.ifpb.pweb2.twingopay.model;
 
-import br.edu.ifpb.pweb2.twingopay.enuns.Natureza;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "tb_categoria")
+@Table(name = "tb_comentario")
 @Getter
 @Setter
 @NoArgsConstructor
-public class Categoria {
+public class Comentario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String nome;
-    private boolean ativo;
-    private Integer ordem;
+    private String texto;
 
-    @Enumerated(EnumType.STRING)
-    private Natureza natureza;
+    @OneToOne
+    @JoinColumn(name = "transacao_id")
+    private Transacao transacao;
 }
