@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Itens & lances</h1>
+    <div th:if="${mensagem}">
+        <h3 th:text="${mensagem}" style="color: blueviolet;"></h3>
+    </div>
+    <table border="1">
+        <thead>
+            <th>Numero</th>
+            <th>Descricao</th>
+            <th>Tipo</th>
+            <th>Dia_fechamento</th>
+            <th>Corrententista</th>
+        </thead>
+        <tbody>
+            <tr th:each="conta : ${contas}">
+                <td><a th:href=""><p th:text="${conta.numero}"></p></a></td>
+                <td th:text="${conta.descricao}"></td>
+                <td th:text="${conta.tipo}"></td>
+                <td th:text="${conta.fechamento}"></td>
+                <td th:text="${conta.correntista}"></td>
+            </tr>
+        </tbody>
+    </table>    
+    <a href="form">Cadastrar</a>
+</body>
+</html>

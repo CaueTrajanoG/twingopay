@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="[http://www.thymeleaf.org]">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1 th:text="${item.id == null ? 'Cadastro de Item' : 'Edição de Item'}">Cadastro de itens</h1>
+
+    <form th:action="@{/item/criarItem}" method="POST" th:object="${item}">
+        <input type="hidden" th:field="*{id}"/>
+        <label for="item">Nome</label>
+        <input type="text" th:field="*{nome}" /><br /><br />
+        <label for="item">Descrição</label>
+        <input type="text" th:field="*{descricao}" /><br /><br />
+        <label for="item">lance mínimo</label>
+        <input type="number" th:field="*{lanceMinimo}" step="0.01" min="0"/>
+        <button type="submit">Enviar</button>
+    </form>
+</body>
+</html>

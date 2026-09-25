@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Itens & lances</h1>
+    <div th:if="${mensagem}">
+        <h3 th:text="${mensagem}" style="color: blueviolet;"></h3>
+    </div>
+    <table border="1">
+        <thead>
+            <th>Id</th>
+            <th>Nome</th>
+        </thead>
+        <tbody>
+            <tr th:each="correntista : ${correntistas}">
+                <td th:text="${correntista.nome}"></td>
+            </tr>
+        </tbody>
+    </table>    
+    <a href="form">Cadastrar</a>
+</body>
+</html>
