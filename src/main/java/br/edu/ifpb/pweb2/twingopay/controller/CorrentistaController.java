@@ -44,10 +44,6 @@ public class CorrentistaController {
             model.addAttribute("mensagem", "Senha obrigatória.");
             return "correntistas/form";
         }
-        if (correntista.getEmail().length() == 0) {
-            model.addAttribute("mensagem", "Informe um e-mail válido.");
-            return "correntistas/form";
-        }
 
         correntistaRepository.save(correntista);
         model.addAttribute("correntistas", correntistaRepository.findAll());
