@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>TwingoPay - Entrar</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        sage: '#A3C68C',
+                        olive: '#879676',
+                        taupe: '#6E6662',
+                        plum: '#4F364A',
+                        eggplant: '#340735',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body
+    class="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-sage via-taupe to-eggplant px-4 py-10">
+    <p class="text-white/70 text-xs mb-8 text-center">Twingopay &mdash; controle financeiro pessoal</p>
+
+    <div class="w-full max-w-sm bg-white rounded-2xl shadow-xl p-8">
+        <h1 class="text-2xl font-bold text-eggplant text-center mb-6">Entrar</h1>
+
+        <form th:action="@{/login}" method="post" class="space-y-5">
+            <div>
+                <label for="username" class="block text-sm font-semibold text-plum mb-1">
+                    Usuário <span class="text-eggplant">*</span>
+                </label>
+                <input type="text" id="username" name="username" placeholder="Digite seu usuário" required
+                    class="w-full border border-olive/50 rounded-md px-3 py-2 text-sm text-taupe placeholder-taupe/40 focus:outline-none focus:ring-2 focus:ring-eggplant focus:border-eggplant">
+            </div>
+
+            <div>
+                <label for="password" class="block text-sm font-semibold text-plum mb-1">
+                    Senha <span class="text-eggplant">*</span>
+                </label>
+                <input type="password" id="password" name="password" placeholder="Digite sua senha" required
+                    class="w-full border border-olive/50 rounded-md px-3 py-2 text-sm text-taupe placeholder-taupe/40 focus:outline-none focus:ring-2 focus:ring-eggplant focus:border-eggplant">
+            </div>
+
+            <div class="flex items-center gap-2">
+                <input type="checkbox" id="remember-me" name="remember-me"
+                    class="w-4 h-4 accent-eggplant cursor-pointer">
+                <label for="remember-me" class="text-sm text-taupe  hover: cursor-pointer">Lembrar de mim</label>
+            </div>
+
+            <button type="submit"
+                class="w-full bg-eggplant hover:bg-plum text-white font-semibold py-2.5 rounded-md transition-colors">
+                Conecte-se
+            </button>
+        </form>
+
+        <div class="text-center mt-6">
+            <a th:href="@{/correntistas/form}" class="block text-sm text-plum hover:text-eggplant hover:underline">
+                Não tenho conta.
+            </a>
+        </div>
+
+        <div class="text-center mt-6 space-y-2">
+
+        </div>
+    </div>
+
+</body>
+
+</html>

@@ -29,6 +29,10 @@ public class CorrentistaController {
         model.addAttribute("correntistas", correntistaRepository.findAll());
         return "correntistas/list";
     }
+    @GetMapping ("/login")
+    public String getLogin(){
+        return "correntistas/login";
+    }
 
     @PostMapping("/save")
     public String save(Correntista correntista, RedirectAttributes attr, Model model) {
