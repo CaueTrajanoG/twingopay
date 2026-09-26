@@ -27,6 +27,7 @@ public class Correntista {
     private Integer id;
     private String nome;
     private String senha;
+    private boolean admin;
 
     @OneToMany(mappedBy = "correntista", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Conta> contas;

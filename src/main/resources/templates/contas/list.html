@@ -20,14 +20,14 @@
         </thead>
         <tbody>
             <tr th:each="conta : ${contas}">
-                <td><a th:href=""><p th:text="${conta.numero}"></p></a></td>
+                <td><a th:href="@{/contas/edit/{id}(id=${conta.id})}"><p th:text="${conta.numero}"></p></a></td>
                 <td th:text="${conta.descricao}"></td>
                 <td th:text="${conta.tipo}"></td>
-                <td th:text="${conta.fechamento}"></td>
-                <td th:text="${conta.correntista}"></td>
+                <td th:text="${conta.diaFechamento}"></td>
+                <td th:text="${conta.correntista.nome}"></td>
             </tr>
         </tbody>
     </table>    
-    <a href="form">Cadastrar</a>
+    <a href="/twingopay/">Cadastrar</a>
 </body>
 </html>

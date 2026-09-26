@@ -8,10 +8,13 @@
 <body>
     <form th:action="@{/correntistas/save}" method="POST" th:object="${correntista}">
         <input type="hidden" th:field="*{id}"/>
-        <label for="item">Nome</label>
+        <label for="correntista">Nome</label>
         <input type="text" th:field="*{nome}"/>
         <label for="item">Senha</label>
-        <input type="text" th:field="*{senha}"/>
+        <input type="password" th:field="*{senha}"/>
+        <label for="item">Admin:</label>
+        <input type="checkbox" th:field="*{admin}"/>
+
         <button type="submit">Cadastrar correntista</button>
     </form>
 </body>
