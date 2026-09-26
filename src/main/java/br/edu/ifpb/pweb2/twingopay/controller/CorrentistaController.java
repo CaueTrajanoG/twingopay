@@ -29,30 +29,16 @@ public class CorrentistaController {
         model.addAttribute("correntistas", correntistaRepository.findAll());
         return "correntistas/list";
     }
-    @GetMapping ("/login")
-    public String getLogin(){
-        return "correntistas/login";
+
+    @GetMapping("/login")
+    public String getLogin() {
+        return "correntistas/loginCorrentista";
     }
 
     @PostMapping("/save")
     public String save(Correntista correntista, RedirectAttributes attr, Model model) {
-        if (correntista.getNome().length() == 0) {
-            model.addAttribute("mensagem", "É necessário informar um nome.");
-            return "correntistas/form";
-        }
-        if (correntista.getNome().length() > 50) {
-            model.addAttribute("mensagem", "Tamanho máximo do campo nome é 50 caracteres.");
-            return "correntistas/form";
-        }
-        if (correntista.getSenha().length() == 0) {
-            model.addAttribute("mensagem", "Senha obrigatória.");
-            return "correntistas/form";
-        }
-
         correntistaRepository.save(correntista);
         model.addAttribute("correntistas", correntistaRepository.findAll());
-        model.addAttribute("mensagem", "Cadastro efetuado de " + correntista.getNome() + " efetuado.");
         return "redirect:/correntistas/list";
-
     }
 }

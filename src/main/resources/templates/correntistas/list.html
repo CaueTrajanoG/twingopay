@@ -1,25 +1,46 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="www.thymeleaf.org">
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Twingopay - Painel do Administrador</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        sage: '#A3C68C',
+                        olive: '#879676',
+                        taupe: '#6E6662',
+                        plum: '#4F364A',
+                        eggplant: '#340735',
+                    }
+                }
+            }
+        }
+    </script>
 </head>
-<body>
-    <h1>Itens & lances</h1>
-    <div th:if="${mensagem}">
-        <h3 th:text="${mensagem}" style="color: blueviolet;"></h3>
-    </div>
-    <table border="1">
-        <thead>
-            <th>Nome do correntista</th>
-        </thead>
-        <tbody>
-            <tr th:each="correntista : ${correntistas}">
-                <td th:text="${correntista.nome}"></td>
-            </tr>
-        </tbody>
-    </table>    
-    <a href="/twingopay/">Cadastrar</a>
+<body class="min-h-screen bg-gray-50">
+
+    <nav class="bg-eggplant text-white px-6 py-4 flex items-center justify-between">
+        <a th:href="@{/login}" class="text-lg font-bold tracking-wide hover:text-sage transition-colors">
+            Twingopay
+        </a>
+
+        <div class="flex items-center gap-4">
+            <span class="text-sm text-white/80">
+                Olá, <span class="font-semibold text-white" th:text="${admin.nome}">Admin</span>
+            </span>
+            <a th:href="@{/logout}"
+               class="bg-plum hover:bg-white hover:text-eggplant text-white text-sm font-semibold px-4 py-2 rounded-md transition-colors">
+                Sair
+            </a>
+        </div>
+    </nav>
+
+    <main class="max-w-5xl mx-auto px-4 py-10">
+        
+    </main>
+
 </body>
 </html>

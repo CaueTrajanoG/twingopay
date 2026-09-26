@@ -29,12 +29,12 @@
     <div class="w-full max-w-sm bg-white rounded-2xl shadow-xl p-8">
         <h1 class="text-2xl font-bold text-eggplant text-center mb-6">Criar conta</h1>
 
-        <div th:if="${erro}"
+        <div th:if="${mensagem}"
             class="bg-red-50 text-red-700 border border-red-200 text-sm rounded-md px-3 py-2 mb-4 text-center">
-            <span th:text="${erro}">Mensagem de erro</span>
+            <span th:text="${mensagem}">Mensagem de erro</span>
         </div>
 
-        <form th:action="@{/correntistas/salvar}" th:object="${correntista}" method="post" class="space-y-5">
+        <form th:action="@{/correntistas/criarCorrentista}" th:object="${correntista}" method="post" class="space-y-5">
 
             <div>
                 <label for="nome" class="block text-sm font-semibold text-plum mb-1">
