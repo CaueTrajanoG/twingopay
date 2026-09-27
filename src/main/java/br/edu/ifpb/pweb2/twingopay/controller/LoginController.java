@@ -31,20 +31,18 @@ public class LoginController {
             HttpSession session,
             RedirectAttributes redirectAttributes) {
 
-        Optional<Correntista> correntistaOpt = correntistaRepository.findByNome(username);
+        Optional<Correntista> dados_correntista = correntistaRepository.findByNome(username);
 
-        if (correntistaOpt.isEmpty() || !correntistaOpt.get().getSenha().equals(senha)) {
+        if (dados_correntista.isEmpty() || !dados_correntista.get().getSenha().equals(senha)) {
             return "redirect:/login?error";
         }
-
-        Correntista correntista = correntistaOpt.get();
-
-        if (!correntista.isAdmin()) {
-            return "redirect:/correntistas/list";
-        }
-
+        Correntista correntista = dados_correntista.get();
         session.setAttribute("correntistaLogado", correntista);
-        return "redirect:/admin/painelAdmin";
+
+        if (correntista.isAdmin()) {
+            return "redirect:/admin/painelAdmin";
+        }
+        return "redirect:/correntistas/list";
     }
 
     @GetMapping("/logout")

@@ -55,7 +55,6 @@ public class AdministradorController {
     public String painelAdmin(HttpSession session, Model model) {
 
         Correntista admin = (Correntista) session.getAttribute("correntistaLogado");
-
         if (admin == null || !admin.isAdmin()) {
             return "redirect:/login";
         }

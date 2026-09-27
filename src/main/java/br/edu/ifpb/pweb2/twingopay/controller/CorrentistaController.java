@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.edu.ifpb.pweb2.twingopay.model.Correntista;
+import br.edu.ifpb.pweb2.twingopay.repository.ContaRepository;
 import br.edu.ifpb.pweb2.twingopay.repository.CorrentistaRepository;
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/correntistas")
@@ -18,6 +20,9 @@ public class CorrentistaController {
     @Autowired
     private CorrentistaRepository correntistaRepository;
 
+    @Autowired
+    private ContaRepository contaRepository;
+
     @GetMapping("/form")
     public String getForm(Correntista correntista, Model model) {
         model.addAttribute("correntista", correntista);
@@ -25,14 +30,10 @@ public class CorrentistaController {
     }
 
     @GetMapping("/list")
-    public String getList(Model model) {
-        model.addAttribute("correntistas", correntistaRepository.findAll());
+    public String getList(Correntista correntista, Model model, HttpSession session) {
+        session.setAttribute("correntista", correntista);
+        model.addAttribute("contas", contaRepository.findAll());
         return "correntistas/list";
-    }
-
-    @GetMapping("/login")
-    public String getLogin() {
-        return "correntistas/loginCorrentista";
     }
 
     @PostMapping("/save")
