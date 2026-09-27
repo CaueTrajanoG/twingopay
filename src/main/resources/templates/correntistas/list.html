@@ -54,7 +54,6 @@
                         <th class="px-4 py-3">Descrição</th>
                         <th class="px-4 py-3">Tipo</th>
                         <th class="px-4 py-3">Dia de Fechamento</th>
-                        <th class="px-4 py-3">Correntista</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -75,7 +74,6 @@
                             <span th:if="${conta.tipo.name() == 'CARTAO'}" th:text="${conta.diaFechamento}">10</span>
                             <span th:unless="${conta.tipo.name() == 'CARTAO'}">-</span>
                         </td>
-                        <td class="px-4 py-3 text-taupe" th:text="${conta.correntista.nome}">Nome</td>
                     </tr>
                     <tr th:if="${#lists.isEmpty(contas)}">
                         <td colspan="5" class="px-4 py-6 text-center text-taupe">

@@ -30,9 +30,12 @@ public class CorrentistaController {
     }
 
     @GetMapping("/list")
-    public String getList(Correntista correntista, Model model, HttpSession session) {
-        session.setAttribute("correntista", correntista);
-        model.addAttribute("contas", contaRepository.findAll());
+    public String getList(Model model, HttpSession session) {
+        Correntista correntista = (Correntista) session.getAttribute("correntistaLogado");
+        if (correntista == null) {
+            return "redirect:/login";
+        }
+        model.addAttribute("contas", contaRepository.findByCorrentista_id(correntista.getId()));
         return "correntistas/list";
     }
 

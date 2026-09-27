@@ -15,7 +15,6 @@ import br.edu.ifpb.pweb2.twingopay.model.Correntista;
 @Controller
 @RequestMapping("/admin")
 public class AdministradorController {
-
     @Autowired
     private CorrentistaRepository correntistaRepository;
 
