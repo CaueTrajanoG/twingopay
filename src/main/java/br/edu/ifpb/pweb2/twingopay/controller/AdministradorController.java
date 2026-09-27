@@ -31,28 +31,14 @@ public class AdministradorController {
 
     @PostMapping("/criarCorrentista")
     public String CriarCorrentista(Correntista correntista, RedirectAttributes attr, Model model) {
-        if (correntista.getNome().length() == 0) {
-            model.addAttribute("mensagem", "É necessário informar um nome.");
-            return "correntistas/form";
-        }
-        if (correntista.getNome().length() > 50) {
-            model.addAttribute("mensagem", "Tamanho máximo do campo nome é 50 caracteres.");
-            return "correntistas/form";
-        }
-        if (correntista.getSenha().length() < 6) {
-            model.addAttribute("mensagem", "Senha deve conter pelo menos 6 elementos.");
-            return "correntistas/form";
-        }
         correntistaRepository.save(correntista);
+        attr.addFlashAttribute("mensagem", "Cadastro efetuado de " + correntista.getNome() + " efetuado.");
         model.addAttribute("correntistas", correntistaRepository.findAll());
-        model.addAttribute("mensagem", "Cadastro efetuado de " + correntista.getNome() + " efetuado.");
-        return "redirect:/admin/list";
-
+        return "redirect:/admin/painelAdmin";
     }
 
     @GetMapping("/painelAdmin")
     public String painelAdmin(HttpSession session, Model model) {
-
         Correntista admin = (Correntista) session.getAttribute("correntistaLogado");
         if (admin == null || !admin.isAdmin()) {
             return "redirect:/login";

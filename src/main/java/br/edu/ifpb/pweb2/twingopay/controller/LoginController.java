@@ -11,7 +11,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.edu.ifpb.pweb2.twingopay.model.Correntista;
 import br.edu.ifpb.pweb2.twingopay.repository.CorrentistaRepository;
-
 import jakarta.servlet.http.HttpSession;
 
 @Controller
@@ -34,6 +33,7 @@ public class LoginController {
         Optional<Correntista> dados_correntista = correntistaRepository.findByNome(username);
 
         if (dados_correntista.isEmpty() || !dados_correntista.get().getSenha().equals(senha)) {
+            redirectAttributes.addFlashAttribute("mensagem", "Login ou senha incorretos.");
             return "redirect:/login?error";
         }
         Correntista correntista = dados_correntista.get();

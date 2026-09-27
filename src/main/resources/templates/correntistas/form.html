@@ -23,7 +23,6 @@
 </head>
 
 <body class="min-h-screen bg-gray-50">
-    <!-- Navbar -->
     <nav class="bg-eggplant text-white px-6 py-4 flex items-center justify-between">
         <a th:href="@{/login}" class="text-lg font-bold tracking-wide hover:text-sage transition-colors">
             Twingopay
@@ -50,7 +49,7 @@
                 <span th:text="${erro}">Mensagem de erro</span>
             </div>
  
-            <form th:action="@{/admin/correntistas/salvar}" th:object="${correntista}" method="post" class="space-y-5">
+            <form th:action="@{/admin/criarCorrentista}" th:object="${correntista}" method="post" class="space-y-5">
  
                 <div>
                     <label for="nome" class="block text-sm font-semibold text-plum mb-1">
