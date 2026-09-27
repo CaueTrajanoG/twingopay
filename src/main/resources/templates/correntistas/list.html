@@ -25,16 +25,14 @@
 <body class="min-h-screen bg-gray-50">
     <!--Navbar-->
     <nav class="bg-eggplant text-white px-6 py-4 flex items-center justify-between">
-        <a th:href="@{/correntistas/list}" class="text-lg font-bold tracking-wide hover:text-sage transition-colors">
-            Twingopay
+        <a th:if="${session.correntistaLogado.admin}" th:href="@{/admin/painelAdmin}"
+            class="bg-plum bg-eggplant hover: text-white text-sm font-semibold px-4 py-2 rounded-md transition-colors">
+            Painel do Administrador
         </a>
-        <span class="text-sm text-white/80">
+            <span class="text-sm text-white/80">
             Olá, <span class="font-semibold text-white" th:text="${session.correntistaLogado.nome}"></span>
         </span>
         <div class="flex items-center gap-4">
-            <span class="text-sm text-white/80">
-
-            </span>
             <a th:href="@{/logout}"
                 class="bg-plum hover:bg-white hover:text-eggplant text-white text-sm font-semibold px-4 py-2 rounded-md transition-colors">
                 Sair

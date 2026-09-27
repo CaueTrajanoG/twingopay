@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import br.edu.ifpb.pweb2.twingopay.model.Correntista;
 import br.edu.ifpb.pweb2.twingopay.repository.CorrentistaRepository;
 import jakarta.servlet.http.HttpSession;
-import br.edu.ifpb.pweb2.twingopay.model.Correntista;
 
 @Controller
 @RequestMapping("/admin")
@@ -61,6 +61,16 @@ public class AdministradorController {
         model.addAttribute("admin", admin);
         model.addAttribute("correntistas", correntistaRepository.findAll());
         return "admin/painelAdmin";
+    }
+
+    @GetMapping("/correntistas/novo")
+    public String formNovoCorrentista(HttpSession session, Model model) {
+        Correntista admin = (Correntista) session.getAttribute("correntistaLogado");
+        if (admin == null || !admin.isAdmin()) {
+            return "redirect:/login";
+        }
+        model.addAttribute("correntista", new Correntista());
+        return "correntistas/form";
     }
 
 }

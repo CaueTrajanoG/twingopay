@@ -36,6 +36,77 @@
             </a>
         </div>
     </nav>
+       <main class="max-w-md mx-auto px-4 py-10">
+        <div class="flex items-center justify-between mb-6">
+            <h1 class="text-2xl font-bold text-eggplant">Novo Correntista</h1>
+            <a th:href="@{/admin/painelAdmin}" class="text-sm text-plum hover:text-eggplant hover:underline">
+                Voltar ao painel
+            </a>
+        </div>
+ 
+        <div class="bg-white rounded-2xl shadow-md p-8">
+            <div th:if="${mensagem}"
+                 class="bg-red-50 text-red-700 border border-red-200 text-sm rounded-md px-3 py-2 mb-4 text-center">
+                <span th:text="${erro}">Mensagem de erro</span>
+            </div>
+ 
+            <form th:action="@{/admin/correntistas/salvar}" th:object="${correntista}" method="post" class="space-y-5">
+ 
+                <div>
+                    <label for="nome" class="block text-sm font-semibold text-plum mb-1">
+                        Nome completo <span class="text-eggplant">*</span>
+                    </label>
+                    <input type="text" id="nome" th:field="*{nome}" placeholder="Digite o nome" required
+                           class="w-full border border-olive/50 rounded-md px-3 py-2 text-sm text-taupe placeholder-taupe/40 focus:outline-none focus:ring-2 focus:ring-eggplant focus:border-eggplant">
+                    <p class="text-xs text-red-600 mt-1" th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}">
+                        Erro no nome
+                    </p>
+                </div>
+ 
+                <div>
+                    <label for="senha" class="block text-sm font-semibold text-plum mb-1">
+                        Senha <span class="text-eggplant">*</span>
+                    </label>
+                    <input type="password" id="senha" th:field="*{senha}" placeholder="Crie uma senha" required
+                           class="w-full border border-olive/50 rounded-md px-3 py-2 text-sm text-taupe placeholder-taupe/40 focus:outline-none focus:ring-2 focus:ring-eggplant focus:border-eggplant">
+                    <p class="text-xs text-red-600 mt-1" th:if="${#fields.hasErrors('senha')}" th:errors="*{senha}">
+                        Erro na senha
+                    </p>
+                </div>
+                <div>
+                    <label for="confirmarSenha" class="block text-sm font-semibold text-plum mb-1">
+                        Confirmar senha <span class="text-eggplant">*</span>
+                    </label>
+                    <input type="password" id="confirmarSenha" name="confirmarSenha" placeholder="Repita a senha" required
+                           class="w-full border border-olive/50 rounded-md px-3 py-2 text-sm text-taupe placeholder-taupe/40 focus:outline-none focus:ring-2 focus:ring-eggplant focus:border-eggplant">
+                    <p id="erro-confirmacao" class="text-xs text-red-600 mt-1 hidden">As senhas não coincidem</p>
+                </div>
+ 
+                <div class="flex items-center gap-2">
+                    <input type="checkbox" id="admin" th:field="*{admin}" class="w-4 h-4 accent-eggplant">
+                    <label for="admin" class="text-sm text-taupe">Este correntista é um administrador</label>
+                </div>
+ 
+                <button type="submit"
+                        class="w-full bg-eggplant hover:bg-plum text-white font-semibold py-2.5 rounded-md transition-colors">
+                    Cadastrar
+                </button>
+            </form>
+        </div>
+    </main>
+    <script>
+        document.querySelector('form').addEventListener('submit', function (event) {
+            var senha = document.getElementById('senha').value;
+            var confirmar = document.getElementById('confirmarSenha').value;
+            var aviso = document.getElementById('erro-confirmacao');
+            if (senha !== confirmar) {
+                event.preventDefault();
+                aviso.classList.remove('hidden');
+            } else {
+                aviso.classList.add('hidden');
+            }
+        });
+    </script>
 </body>
 
 </html>

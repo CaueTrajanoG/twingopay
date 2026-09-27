@@ -20,25 +20,25 @@ public class ContaController {
     @Autowired
     private ContaRepository contaRepository;
 
-    @Autowired 
+    @Autowired
     private CorrentistaRepository correntistaRepository;
 
     @GetMapping("/form")
-    public String getForm(Conta conta, Model model){
+    public String getForm(Conta conta, Model model) {
         model.addAttribute("conta", conta);
         model.addAttribute("correntistas", correntistaRepository.findAll());
         model.addAttribute("tipos", TipoConta.values());
         return "contas/form";
     }
 
-    @GetMapping ("/list")
-    public String getList(Model model){
+    @GetMapping("/list")
+    public String getList(Model model) {
         model.addAttribute("contas", contaRepository.findAll());
         return "contas/list";
     }
 
-    @PostMapping ("/save")
-    public String save(Conta conta, RedirectAttributes attr, Model model){
+    @PostMapping("/save")
+    public String save(Conta conta, RedirectAttributes attr, Model model) {
         attr.addFlashAttribute("mensagem", "Conta criada com sucesso");
         contaRepository.save(conta);
         return "redirect:/contas/list";

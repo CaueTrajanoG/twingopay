@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <title>Twingopay - Painel do Administrador</title>
@@ -20,26 +21,34 @@
         }
     </script>
 </head>
+
 <body class="min-h-screen bg-gray-50">
     <nav class="bg-eggplant text-white px-6 py-4 flex items-center justify-between">
-        <a th:href="@{/correntistas/list}" class="text-lg font-bold tracking-wide hover:text-sage transition-colors">
-            Twingopay
+        <a th:href="@{/correntistas/list}"
+            class="bg-plum hover:bg-white hover:text-eggplant text-white text-sm font-semibold px-4 py-2 rounded-md transition-colors">
+            Contas
         </a>
-
+        <span class="text-sm text-white/80">
+            Olá, <span class="font-semibold text-white" th:text="${admin.nome}">Admin</span>
+        </span>
         <div class="flex items-center gap-4">
-            <span class="text-sm text-white/80">
-                Olá, <span class="font-semibold text-white" th:text="${admin.nome}">Admin</span>
-            </span>
+
             <a th:href="@{/logout}"
-               class="bg-plum hover:bg-white hover:text-eggplant text-white text-sm font-semibold px-4 py-2 rounded-md transition-colors">
+                class="bg-plum hover:bg-white hover:text-eggplant text-white text-sm font-semibold px-4 py-2 rounded-md transition-colors">
                 Sair
             </a>
         </div>
     </nav>
 
     <main class="max-w-5xl mx-auto px-4 py-10">
-        <h1 class="text-2xl font-bold text-eggplant mb-6">Painel do Administrador</h1>
-
+        <div class="flex items-center justify-between mb-6">
+            <h1 class="text-2xl font-bold text-eggplant">Painel do Administrador</h1>
+ 
+            <a th:href="@{/admin/correntistas/novo}"
+               class="bg-eggplant hover:bg-plum text-white text-sm font-semibold px-4 py-2 rounded-md transition-colors">
+                + Cadastrar Correntista
+            </a>
+        </div>
         <div class="bg-white rounded-2xl shadow-md overflow-hidden">
             <table class="w-full text-sm text-left">
                 <thead class="bg-plum text-white">
@@ -55,7 +64,7 @@
                         <td class="px-4 py-3 text-taupe" th:text="${correntista.nome}">Nome</td>
                         <td class="px-4 py-3">
                             <span th:if="${correntista.admin}"
-                                  class="text-xs font-semibold bg-sage/30 text-eggplant px-2 py-1 rounded-full">
+                                class="text-xs font-semibold bg-sage/30 text-eggplant px-2 py-1 rounded-full">
                                 Administrador
                             </span>
                             <span th:unless="${correntista.admin}" class="text-xs text-taupe">
@@ -74,4 +83,5 @@
     </main>
 
 </body>
+
 </html>
