@@ -1,13 +1,17 @@
 package br.edu.ifpb.pweb2.twingopay.controller;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import br.edu.ifpb.pweb2.twingopay.model.Conta;
 import br.edu.ifpb.pweb2.twingopay.model.Correntista;
 import br.edu.ifpb.pweb2.twingopay.repository.ContaRepository;
 import br.edu.ifpb.pweb2.twingopay.repository.CorrentistaRepository;
@@ -44,5 +48,23 @@ public class CorrentistaController {
         correntistaRepository.save(correntista);
         model.addAttribute("correntistas", correntistaRepository.findAll());
         return "redirect:/correntistas/list";
+    }
+
+    @GetMapping("/contas/{id}")
+    public String detalhesConta(@PathVariable Integer id, HttpSession session, Model model) {
+        Correntista correntista = (Correntista) session.getAttribute("correntistaLogado");
+        if (correntista == null) {
+            return "redirect:/login";
+        }
+
+        Optional<Conta> contaOpt = contaRepository.findById(id);
+
+        // um correntista só pode ver detalhes das suas proprias contas
+        if (contaOpt.isEmpty() || !contaOpt.get().getCorrentista().getId().equals(correntista.getId())) {
+            return "redirect:/correntista/painel";
+        }
+
+        model.addAttribute("conta", contaOpt.get());
+        return "contas/detalhesConta";
     }
 }
