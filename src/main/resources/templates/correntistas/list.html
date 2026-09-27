@@ -29,7 +29,7 @@
             class="bg-plum bg-eggplant hover: text-white text-sm font-semibold px-4 py-2 rounded-md transition-colors">
             Painel do Administrador
         </a>
-            <span class="text-sm text-white/80">
+        <span class="text-sm text-white/80">
             Olá, <span class="font-semibold text-white" th:text="${session.correntistaLogado.nome}"></span>
         </span>
         <div class="flex items-center gap-4">
@@ -42,8 +42,14 @@
 
     <!-- Listinha com as contas desse caba-->
     <main class="max-w-5xl mx-auto px-4 py-10">
-        <h1 class="text-2xl font-bold text-eggplant mb-6">Contas</h1>
-
+        <div class="flex items-center justify-between mb-6">
+            <h1 class="text-2xl font-bold text-eggplant">Minhas Contas</h1>
+ 
+            <a th:href="@{/correntistas/contas/novaConta}"
+               class="bg-eggplant hover:bg-plum text-white text-sm font-semibold px-4 py-2 rounded-md transition-colors">
+                + Nova Conta
+            </a>
+        </div>
         <div class="bg-white rounded-2xl shadow-md overflow-hidden">
             <table class="w-full text-sm text-left">
                 <thead class="bg-plum text-white">
@@ -62,11 +68,11 @@
                         <td class="px-4 py-3 text-taupe" th:text="${conta.descricao}">Descrição</td>
                         <td class="px-4 py-3">
                             <span th:if="${conta.tipo.name() == 'CARTAO'}"
-                                  class="text-xs font-semibold bg-sage/30 text-eggplant px-2 py-1 rounded-full">
+                                class="text-xs font-semibold bg-sage/30 text-eggplant px-2 py-1 rounded-full">
                                 Cartão
                             </span>
                             <span th:unless="${conta.tipo.name() == 'CARTAO'}"
-                                  class="text-xs font-semibold bg-olive/20 text-plum px-2 py-1 rounded-full">
+                                class="text-xs font-semibold bg-olive/20 text-plum px-2 py-1 rounded-full">
                                 Corrente
                             </span>
                         </td>

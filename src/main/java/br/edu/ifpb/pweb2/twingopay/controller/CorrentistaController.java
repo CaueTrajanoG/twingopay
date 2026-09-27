@@ -67,4 +67,15 @@ public class CorrentistaController {
         model.addAttribute("conta", contaOpt.get());
         return "contas/detalhesConta";
     }
+
+    @GetMapping("/contas/novaConta")
+    public String formNovaConta(HttpSession session, Model model) {
+        Correntista correntista = (Correntista) session.getAttribute("correntistaLogado");
+        if (correntista == null) {
+            return "redirect:/login";
+        }
+        model.addAttribute("conta", new Conta());
+        return "contas/novaConta";
+    }
+
 }

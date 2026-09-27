@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Twingopay - Nova Conta</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        sage: '#A3C68C',
+                        olive: '#879676',
+                        taupe: '#6E6662',
+                        plum: '#4F364A',
+                        eggplant: '#340735',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="min-h-screen bg-gray-50">
+
+    <nav class="bg-eggplant text-white px-6 py-4 flex items-center justify-between">
+        <a th:href="@{/login}" class="text-lg font-bold tracking-wide hover:text-sage transition-colors">
+            Twingopay
+        </a>
+
+        <div class="flex items-center gap-4">
+            <span class="text-sm text-white/80">
+                Olá, <span class="font-semibold text-white" th:text="${session.correntistaLogado.nome}">Correntista</span>
+            </span>
+            <a th:href="@{/logout}"
+               class="bg-plum hover:bg-white hover:text-eggplant text-white text-sm font-semibold px-4 py-2 rounded-md transition-colors">
+                Sair
+            </a>
+        </div>
+    </nav>
+
+    <main class="max-w-md mx-auto px-4 py-10">
+        <div class="flex items-center justify-between mb-6">
+            <h1 class="text-2xl font-bold text-eggplant">Nova Conta</h1>
+            <a th:href="@{/correntistas/list}" class="text-sm text-plum hover:text-eggplant hover:underline">
+                Voltar
+            </a>
+        </div>
+
+        <div class="bg-white rounded-2xl shadow-md p-8">
+
+            <div th:if="${erro}"
+                 class="bg-red-50 text-red-700 border border-red-200 text-sm rounded-md px-3 py-2 mb-4 text-center">
+                <span th:text="${erro}">Mensagem de erro</span>
+            </div>
+            <form th:action="@{/contas/salvar}" th:object="${conta}" method="post" class="space-y-5">
+
+                <div>
+                    <label for="numero" class="block text-sm font-semibold text-plum mb-1">
+                        Número da conta <span class="text-eggplant"></span>
+                    </label>
+                    <input type="text" id="numero" th:field="*{numero}" placeholder="Ex: 0007" required
+                           class="w-full border border-olive/50 rounded-md px-3 py-2 text-sm text-taupe placeholder-taupe/40 focus:outline-none focus:ring-2 focus:ring-eggplant focus:border-eggplant">
+                    <p class="text-xs text-red-600 mt-1" th:if="${#fields.hasErrors('numero')}" th:errors="*{numero}">
+                        Erro no número
+                    </p>
+                </div>
+
+                <div>
+                    <label for="descricao" class="block text-sm font-semibold text-plum mb-1">
+                        Descrição <span class="text-eggplant"></span>
+                    </label>
+                    <input type="text" id="descricao" th:field="*{descricao}" placeholder="Ex: Conta principal" required
+                           class="w-full border border-olive/50 rounded-md px-3 py-2 text-sm text-taupe placeholder-taupe/40 focus:outline-none focus:ring-2 focus:ring-eggplant focus:border-eggplant">
+                    <p class="text-xs text-red-600 mt-1" th:if="${#fields.hasErrors('descricao')}" th:errors="*{descricao}">
+                        Erro na descrição
+                    </p>
+                </div>
+
+                <div>
+                    <label for="tipo" class="block text-sm font-semibold text-plum mb-1">
+                        Tipo <span class="text-eggplant"></span>
+                    </label>
+                    <select id="tipo" th:field="*{tipo}" required
+                            class="w-full border border-olive/50 rounded-md px-3 py-2 text-sm text-taupe focus:outline-none focus:ring-2 focus:ring-eggplant focus:border-eggplant">
+                        <option value="" disabled selected>Selecione</option>
+                        <option value="CORRENTE">Conta corrente</option>
+                        <option value="CARTAO">Cartão de crédito</option>
+                    </select>
+                    <p class="text-xs text-red-600 mt-1" th:if="${#fields.hasErrors('tipo')}" th:errors="*{tipo}">
+                        Erro no tipo
+                    </p>
+                </div>
+                <div id="campo-dia-fechamento" class="hidden">
+                    <label for="diaFechamento" class="block text-sm font-semibold text-plum mb-1">
+                        Dia de fechamento
+                    </label>
+                    <input type="number" id="diaFechamento" th:field="*{diaFechamento}" min="1" max="31" placeholder="Ex: 10"
+                           class="w-full border border-olive/50 rounded-md px-3 py-2 text-sm text-taupe placeholder-taupe/40 focus:outline-none focus:ring-2 focus:ring-eggplant focus:border-eggplant">
+                    <p class="text-xs text-red-600 mt-1" th:if="${#fields.hasErrors('diaFechamento')}" th:errors="*{diaFechamento}">
+                        Erro no dia de fechamento
+                    </p>
+                </div>
+
+                <button type="submit"
+                        class="w-full bg-eggplant hover:bg-plum text-white font-semibold py-2.5 rounded-md transition-colors">
+                    Cadastrar
+                </button>
+            </form>
+        </div>
+    </main>
+
+    <script>
+        var selectTipo = document.getElementById('tipo');
+        var campoDiaFechamento = document.getElementById('campo-dia-fechamento');
+
+        function atualizarCampoDiaFechamento() {
+            if (selectTipo.value === 'CARTAO') {
+                campoDiaFechamento.classList.remove('hidden');
+            } else {
+                campoDiaFechamento.classList.add('hidden');
+            }
+        }
+
+        selectTipo.addEventListener('change', atualizarCampoDiaFechamento);
+        atualizarCampoDiaFechamento();
+    </script>
+
+</body>
+</html>
