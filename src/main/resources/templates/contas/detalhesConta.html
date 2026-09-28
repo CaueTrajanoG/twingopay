@@ -92,6 +92,14 @@
                 </div>
             </dl>
         </div>
+
+        <!-- Botão de Nova Transação -->
+            <div class="flex justify-end">
+                <a th:href="@{/transacoes/nova(contaId=${conta.id})}"
+                   class="bg-eggplant hover:bg-plum text-white text-sm font-semibold px-4 py-2 rounded-md transition-colors">
+                    + Nova Transação
+                </a>
+        </div>
     </main>
 
 </body>
