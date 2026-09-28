@@ -2,7 +2,7 @@
 <html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Twingopay - Nova Transação</title>
+    <title>Twingopay - Transação</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -38,7 +38,7 @@
 
     <main class="max-w-md mx-auto px-4 py-10">
         <div class="flex items-center justify-between mb-6">
-            <h1 class="text-2xl font-bold text-eggplant">Nova Transação</h1>
+            <h1 class="text-2xl font-bold text-eggplant" th:text="${transacao.id == null ? 'Nova Transação' : 'Editar Transação'}">Transação</h1>
             <a th:href="@{/correntistas/contas/{id}(id=${conta.id})}" class="text-sm text-plum hover:text-eggplant hover:underline">
                 Voltar para a conta
             </a>
@@ -47,6 +47,9 @@
         <div class="bg-white rounded-2xl shadow-md p-8">
             <form th:action="@{/transacoes/salvar}" th:object="${transacao}" method="post" class="space-y-5">
                 
+                <!-- Campo oculto para o ID (essencial para o Spring identificar que é uma atualização/edição) -->
+                <input type="hidden" th:field="*{id}" />
+
                 <!-- Campo oculto para vincular a transação à conta correta -->
                 <input type="hidden" th:field="*{conta.id}" />
 

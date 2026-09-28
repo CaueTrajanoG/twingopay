@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,49 +20,73 @@ import br.edu.ifpb.pweb2.twingopay.repository.ContaRepository;
 import br.edu.ifpb.pweb2.twingopay.repository.TransacaoRepository;
 import jakarta.servlet.http.HttpSession;
 
-@Controller 
-@RequestMapping ("/transacoes")
+@Controller
+@RequestMapping("/transacoes")
 public class TransacaoController {
 
-    @Autowired 
+    @Autowired
     private TransacaoRepository transacaoRepository;
 
-    @Autowired 
+    @Autowired
     private ContaRepository contaRepository;
 
-    @Autowired 
+    @Autowired
     private CategoriaRepository categoriaRepository;
 
     @GetMapping("/nova")
     public String formNovaTransacao(
-        @RequestParam Integer contaId,
-        Model model,
-        HttpSession session) {
-            if (session.getAttribute("correntistaLogado") == null) {
-                return "redirect:/login";
-            }
-
-            Optional<Conta> contaOpt = contaRepository.findById(contaId);
-            if (contaOpt.isEmpty()) {
-                return "redirect:/correntistas/list";
-            }
-
-            Transacao transacao = new Transacao();
-            transacao.setConta(contaOpt.get());
-
-            model.addAttribute("transacao", transacao);
-            model.addAttribute("conta", contaOpt.get());
-            model.addAttribute("categorias", categoriaRepository.findAll());
-            model.addAttribute("movimentos", Movimento.values());
-
-            return "transacoes/form";
-        } 
-
-        @PostMapping("/salvar")
-        public String salvarTransacao(Transacao transacao, RedirectAttributes redirectAttributes) {
-            transacaoRepository.save(transacao);
-            redirectAttributes.addFlashAttribute("mensagem", "Transação salva!");
-            return "redirect:/correntistas/contas/" + transacao.getConta().getId();
+            @RequestParam Integer contaId,
+            Model model,
+            HttpSession session) {
+        if (session.getAttribute("correntistaLogado") == null) {
+            return "redirect:/login";
         }
+
+        Optional<Conta> contaOpt = contaRepository.findById(contaId);
+        if (contaOpt.isEmpty()) {
+            return "redirect:/correntistas/list";
+        }
+
+        Transacao transacao = new Transacao();
+        transacao.setConta(contaOpt.get());
+
+        model.addAttribute("transacao", transacao);
+        model.addAttribute("conta", contaOpt.get());
+        model.addAttribute("categorias", categoriaRepository.findAll());
+        model.addAttribute("movimentos", Movimento.values());
+
+        return "transacoes/form";
+    }
+
+    @PostMapping("/salvar")
+    public String salvarTransacao(Transacao transacao, RedirectAttributes redirectAttributes) {
+        transacaoRepository.save(transacao);
+        redirectAttributes.addFlashAttribute("mensagem", "Transação salva!");
+        return "redirect:/correntistas/contas/" + transacao.getConta().getId();
+    }
+
+    @GetMapping("/editar/{id}")
+    public String formEditarTransacao(
+            @PathVariable("id") Integer id,
+            Model model,
+            HttpSession session) {
+        if (session.getAttribute("correntistaLogado") == null) {
+            return "redirect:/login";
+        }
+
+        Optional<Transacao> transacaoOpt = transacaoRepository.findById(id);
+        if (transacaoOpt.isEmpty()) {
+            return "redirect:/correntistas/list";
+        }
+
+        Transacao transacao = transacaoOpt.get();
+
+        model.addAttribute("transacao", transacao);
+        model.addAttribute("conta", transacao.getConta());
+        model.addAttribute("categorias", categoriaRepository.findAll());
+        model.addAttribute("movimentos", Movimento.values());
+
+        return "transacoes/form";
+    }
 
 }
