@@ -74,4 +74,27 @@ public class ComentarioController {
         redirectAttributes.addFlashAttribute("erro", "Erro ao salvar o comentário.");
         return "redirect:/correntistas/list";
     }
+
+    @GetMapping("/excluir/{id}")
+    public String excluirComentario(
+        @PathVariable Integer id,
+        RedirectAttributes redirectAttributes,
+        HttpSession session) {
+            if(session.getAttribute("correntistaLogado") == null) {
+                return "redirect:/login";
+            }
+
+            Optional<Comentario> comentarioOpt = comentarioRepository.findById(id);
+            if(comentarioOpt.isPresent()) {
+                Comentario comentario = comentarioOpt.get();
+                Integer contaId = comentario.getTransacao().getConta().getId();
+
+                comentarioRepository.delete(comentario);
+                redirectAttributes.addFlashAttribute("mensagem", "Comentário excluído!");
+
+                return "redirect:/correntistas/contas/" + contaId;
+            }
+
+            return "redirect:/correntistas/list";
+        }
 }
