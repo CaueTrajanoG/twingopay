@@ -1,18 +1,24 @@
 package br.edu.ifpb.pweb2.twingopay.controller;
 
+import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.edu.ifpb.pweb2.twingopay.model.Conta;
 import br.edu.ifpb.pweb2.twingopay.model.Correntista;
+import br.edu.ifpb.pweb2.twingopay.model.Transacao;
 import br.edu.ifpb.pweb2.twingopay.repository.ContaRepository;
 import br.edu.ifpb.pweb2.twingopay.repository.CorrentistaRepository;
 import jakarta.servlet.http.HttpSession;
@@ -51,20 +57,37 @@ public class CorrentistaController {
     }
 
     @GetMapping("/contas/{id}")
-    public String detalhesConta(@PathVariable Integer id, HttpSession session, Model model) {
+    public String detalhesConta(
+            @PathVariable Integer id,
+            @RequestParam(value = "dataInicio", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate dataInicio,
+            @RequestParam(value = "dataFim", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate dataFim,
+            HttpSession session, 
+            Model model) {
+        
         Correntista correntista = (Correntista) session.getAttribute("correntistaLogado");
         if (correntista == null) {
             return "redirect:/login";
         }
 
         Optional<Conta> contaOpt = contaRepository.findById(id);
-
-        // um correntista só pode ver detalhes das suas proprias contas
         if (contaOpt.isEmpty() || !contaOpt.get().getCorrentista().getId().equals(correntista.getId())) {
-            return "redirect:/correntista/painel";
+            return "redirect:/correntistas/list";
         }
 
-        model.addAttribute("conta", contaOpt.get());
+        Conta conta = contaOpt.get();
+        List<Transacao> transacoesFiltradas = conta.getTransacoes();
+
+        if (dataInicio != null && dataFim != null) {
+            transacoesFiltradas = transacoesFiltradas.stream()
+                .filter(t -> t.getData() != null && !t.getData().isBefore(dataInicio) && !t.getData().isAfter(dataFim))
+                .collect(Collectors.toList());
+        }
+
+        model.addAttribute("conta", conta);
+        model.addAttribute("transacoes", transacoesFiltradas);
+        model.addAttribute("dataInicio", dataInicio);
+        model.addAttribute("dataFim", dataFim);
+
         return "contas/detalhesConta";
     }
 
@@ -77,5 +100,4 @@ public class CorrentistaController {
         model.addAttribute("conta", new Conta());
         return "contas/novaConta";
     }
-
 }
