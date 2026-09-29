@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Twingopay - Orçamento Anual</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        sage: '#A3C68C',
+                        olive: '#879676',
+                        taupe: '#6E6662',
+                        plum: '#4F364A',
+                        eggplant: '#340735',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="min-h-screen bg-gray-50">
+    <!-- Navbar -->
+    <nav class="bg-eggplant text-white px-6 py-4 flex items-center justify-between">
+        <a th:href="@{/correntistas/list}" class="text-lg font-bold tracking-wide hover:text-sage transition-colors">
+            Twingopay
+        </a>
+        <div class="flex items-center gap-4">
+            <span class="text-sm text-white/80">
+                Olá, <span class="font-semibold text-white" th:text="${session.correntistaLogado.nome}">Correntista</span>
+            </span>
+            <a th:href="@{/logout}"
+               class="bg-plum hover:bg-white hover:text-eggplant text-white text-sm font-semibold px-4 py-2 rounded-md transition-colors">
+                Sair
+            </a>
+        </div>
+    </nav>
+
+    <!-- Conteúdo -->
+    <main class="max-w-7xl mx-auto px-4 py-10">
+        <div class="flex items-center justify-between mb-6">
+            <div>
+                <h1 class="text-2xl font-bold text-eggplant">Orçamento Anual</h1>
+                <p class="text-sm text-taupe">Visão consolidada de receitas e despesas por categoria e mês.</p>
+            </div>
+            <a th:href="@{/correntistas/list}" class="text-sm text-plum hover:text-eggplant hover:underline">
+                &larr; Voltar às contas
+            </a>
+        </div>
+
+        <!-- Seletor de Ano -->
+        <div class="bg-white rounded-2xl shadow-md p-6 mb-8 flex items-center justify-between">
+            <form method="get" class="flex items-center gap-4">
+                <label for="ano" class="text-sm font-semibold text-plum">Ano de Referência:</label>
+                <select id="ano" name="ano" class="border border-olive/50 rounded-md px-3 py-1.5 text-sm text-taupe focus:ring-2 focus:ring-eggplant">
+                    <option th:value="2025" th:selected="${anoSelecionado == 2025}">2025</option>
+                    <option th:value="2026" th:selected="${anoSelecionado == 2026}">2026</option>
+                    <option th:value="2027" th:selected="${anoSelecionado == 2027}">2027</option>
+                </select>
+                <button type="submit" class="bg-eggplant hover:bg-plum text-white text-sm font-semibold px-4 py-1.5 rounded-md transition-colors">
+                    Alterar Ano
+                </button>
+            </form>
+        </div>
+
+        <!-- Tabela Pivot do Orçamento -->
+        <div class="bg-white rounded-2xl shadow-md overflow-x-auto">
+            <table class="w-full text-xs text-left whitespace-nowrap">
+                <thead class="bg-plum text-white">
+                    <tr>
+                        <th class="px-3 py-3">Categoria</th>
+                        <th class="px-3 py-3 text-center">Jan</th>
+                        <th class="px-3 py-3 text-center">Fev</th>
+                        <th class="px-3 py-3 text-center">Mar</th>
+                        <th class="px-3 py-3 text-center">Abr</th>
+                        <th class="px-3 py-3 text-center">Mai</th>
+                        <th class="px-3 py-3 text-center">Jun</th>
+                        <th class="px-3 py-3 text-center">Jul</th>
+                        <th class="px-3 py-3 text-center">Ago</th>
+                        <th class="px-3 py-3 text-center">Set</th>
+                        <th class="px-3 py-3 text-center">Out</th>
+                        <th class="px-3 py-3 text-center">Nov</th>
+                        <th class="px-3 py-3 text-center">Dez</th>
+                        <th class="px-3 py-3 text-right">Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="cat : ${categorias}" class="border-b border-olive/20 hover:bg-sage/10">
+                        <td class="px-3 py-2.5 font-medium text-eggplant" th:text="${cat.nome}">Alimentação</td>
+                        <!-- Meses de Jan a Dez (Placeholder dinâmico/zeros por enquanto) -->
+                        <td class="px-3 py-2.5 text-center text-taupe">R$ 0,00</td>
+                        <td class="px-3 py-2.5 text-center text-taupe">R$ 0,00</td>
+                        <td class="px-3 py-2.5 text-center text-taupe">R$ 0,00</td>
+                        <td class="px-3 py-2.5 text-center text-taupe">R$ 0,00</td>
+                        <td class="px-3 py-2.5 text-center text-taupe">R$ 0,00</td>
+                        <td class="px-3 py-2.5 text-center text-taupe">R$ 0,00</td>
+                        <td class="px-3 py-2.5 text-center text-taupe">R$ 0,00</td>
+                        <td class="px-3 py-2.5 text-center text-taupe">R$ 0,00</td>
+                        <td class="px-3 py-2.5 text-center text-taupe">R$ 0,00</td>
+                        <td class="px-3 py-2.5 text-center text-taupe">R$ 0,00</td>
+                        <td class="px-3 py-2.5 text-center text-taupe">R$ 0,00</td>
+                        <td class="px-3 py-2.5 text-center text-taupe">R$ 0,00</td>
+                        <td class="px-3 py-2.5 text-right font-bold text-plum">R$ 0,00</td>
+                    </tr>
+                    
+                    <!-- Mensagem se não houver categorias -->
+                    <tr th:if="${#lists.isEmpty(categorias)}">
+                        <td colspan="14" class="px-4 py-6 text-center text-taupe">
+                            Nenhuma categoria cadastrada no sistema.
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+</body>
+</html>
