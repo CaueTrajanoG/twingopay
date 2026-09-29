@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Twingopay - Comentário da Transação</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        sage: '#A3C68C',
+                        olive: '#879676',
+                        taupe: '#6E6662',
+                        plum: '#4F364A',
+                        eggplant: '#340735',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="min-h-screen bg-gray-50">
+    <nav class="bg-eggplant text-white px-6 py-4 flex items-center justify-between">
+        <a th:href="@{/correntistas/list}" class="text-lg font-bold tracking-wide hover:text-sage transition-colors">
+            Twingopay
+        </a>
+        <div class="flex items-center gap-4">
+            <span class="text-sm text-white/80">
+                Olá, <span class="font-semibold text-white" th:text="${session.correntistaLogado.nome}">Correntista</span>
+            </span>
+            <a th:href="@{/logout}"
+               class="bg-plum hover:bg-white hover:text-eggplant text-white text-sm font-semibold px-4 py-2 rounded-md transition-colors">
+                Sair
+            </a>
+        </div>
+    </nav>
+
+    <main class="max-w-md mx-auto px-4 py-10">
+        <div class="flex items-center justify-between mb-6">
+            <h1 class="text-2xl font-bold text-eggplant">Comentário da Transação</h1>
+            <a th:href="@{/correntistas/contas/{id}(id=${transacao.conta.id})}" class="text-sm text-plum hover:text-eggplant hover:underline">
+                Voltar para a conta
+            </a>
+        </div>
+
+        <div class="bg-white rounded-2xl shadow-md p-8 space-y-4">
+            <div class="bg-sage/10 p-4 rounded-lg border border-sage/30 text-sm text-taupe">
+                <p><strong class="text-plum">Transação:</strong> <span th:text="${transacao.descricao}">Descrição</span></p>
+                <p><strong class="text-plum">Valor:</strong> R$ <span th:text="${transacao.valor}">0.00</span></p>
+            </div>
+
+            <form th:action="@{/comentarios/salvar}" th:object="${comentario}" method="post" class="space-y-5">
+                
+                <!-- Campos ocultos -->
+                <input type="hidden" th:field="*{id}" />
+                <input type="hidden" th:field="*{transacao.id}" />
+
+                <div>
+                    <label for="texto" class="block text-sm font-semibold text-plum mb-1">Texto do Comentário</label>
+                    <textarea id="texto" th:field="*{texto}" rows="4" placeholder="Escreva detalhes adicionais sobre esta transação..." required
+                              class="w-full border border-olive/50 rounded-md px-3 py-2 text-sm text-taupe focus:outline-none focus:ring-2 focus:ring-eggplant focus:border-eggplant"></textarea>
+                </div>
+
+                <button type="submit"
+                        class="w-full bg-eggplant hover:bg-plum text-white font-semibold py-2.5 rounded-md transition-colors">
+                    Salvar Comentário
+                </button>
+            </form>
+        </div>
+    </main>
+</body>
+</html>

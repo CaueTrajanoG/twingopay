@@ -132,7 +132,7 @@
                             <a th:href="@{/transacoes/editar/{id}(id=${t.id})}" class="text-olive hover:text-eggplant" title="Editar">✏️</a>
                             
                             <!-- Botão de Comentário -->
-                            <button class="text-olive hover:text-eggplant" title="Comentar">💬</button>
+                            <a th:href="@{/comentarios/transacao/{id}(id=${t.id})}" class="text-olive hover:text-eggplant" title="Comentar">💬</a>
                         </td>
                     </tr>
                     
