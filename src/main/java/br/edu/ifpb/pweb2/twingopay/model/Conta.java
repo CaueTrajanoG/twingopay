@@ -38,7 +38,7 @@ public class Conta {
     private String descricao;
     @Enumerated(EnumType.STRING)
     private TipoConta tipo;
-    private Integer diaFechamento; // usamos quando é tipo cartão
+    private Integer diaFechamento; // tipo cartão
 
     @ManyToOne
     private Correntista correntista;

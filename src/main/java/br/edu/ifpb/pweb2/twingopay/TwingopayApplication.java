@@ -8,5 +8,5 @@ public class TwingopayApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(TwingopayApplication.class, args);
 	}
-
 }
+
