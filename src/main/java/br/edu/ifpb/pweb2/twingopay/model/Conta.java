@@ -27,7 +27,7 @@ import lombok.ToString;
 @Setter
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@ToString(exclude = {"transacoes", "correntista"})
+@ToString(exclude = { "transacoes", "correntista" })
 public class Conta {
 
     @Id
@@ -56,6 +56,10 @@ public class Conta {
             }
         }
         return total;
+    }
+
+    public Integer getCorrentistaId() {
+        return this.correntista.getId();
     }
 
 }

@@ -45,7 +45,7 @@ public class CorrentistaController {
         if (correntista == null) {
             return "redirect:/login";
         }
-        model.addAttribute("contas", contaRepository.findByCorrentista_id(correntista.getId()));
+        model.addAttribute("contas", correntistaRepository.findById(correntista.getId()));
         return "correntistas/list";
     }
 
@@ -61,16 +61,16 @@ public class CorrentistaController {
             @PathVariable Integer id,
             @RequestParam(value = "dataInicio", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate dataInicio,
             @RequestParam(value = "dataFim", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate dataFim,
-            HttpSession session, 
+            HttpSession session,
             Model model) {
-        
+
         Correntista correntista = (Correntista) session.getAttribute("correntistaLogado");
         if (correntista == null) {
             return "redirect:/login";
         }
 
         Optional<Conta> contaOpt = contaRepository.findById(id);
-        if (contaOpt.isEmpty() || !contaOpt.get().getCorrentista().getId().equals(correntista.getId())) {
+        if (contaOpt.isEmpty() || !contaOpt.get().getCorrentistaId().equals(correntista.getId())) {
             return "redirect:/correntistas/list";
         }
 
@@ -79,8 +79,9 @@ public class CorrentistaController {
 
         if (dataInicio != null && dataFim != null) {
             transacoesFiltradas = transacoesFiltradas.stream()
-                .filter(t -> t.getData() != null && !t.getData().isBefore(dataInicio) && !t.getData().isAfter(dataFim))
-                .collect(Collectors.toList());
+                    .filter(t -> t.getData() != null && !t.getData().isBefore(dataInicio)
+                            && !t.getData().isAfter(dataFim))
+                    .collect(Collectors.toList());
         }
 
         model.addAttribute("conta", conta);
