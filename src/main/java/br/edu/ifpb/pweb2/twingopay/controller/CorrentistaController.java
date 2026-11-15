@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,6 +27,8 @@ import jakarta.servlet.http.HttpSession;
 @Controller
 @RequestMapping("/correntistas")
 public class CorrentistaController {
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     private CorrentistaRepository correntistaRepository;
@@ -51,6 +54,7 @@ public class CorrentistaController {
 
     @PostMapping("/save")
     public String save(Correntista correntista, RedirectAttributes attr, Model model) {
+        correntista.setSenha(passwordEncoder.encode(correntista.getSenha()));
         correntistaRepository.save(correntista);
         model.addAttribute("correntistas", correntistaRepository.findAll());
         return "redirect:/correntistas/list";

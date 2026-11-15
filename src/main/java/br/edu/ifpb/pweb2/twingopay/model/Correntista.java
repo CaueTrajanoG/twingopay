@@ -3,6 +3,7 @@ package br.edu.ifpb.pweb2.twingopay.model;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -25,7 +26,10 @@ public class Correntista {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String nome;
+
+    @Column(unique = true, nullable = false) // não permite duplicidade
+    private String username;
+
     private String senha;
     private boolean admin;
 
@@ -34,7 +38,7 @@ public class Correntista {
     }
 
     public String getNome() {
-        return this.nome;
+        return this.username;
     }
 
     public boolean isAdmin() {

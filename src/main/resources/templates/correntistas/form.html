@@ -55,9 +55,8 @@
                     <label for="nome" class="block text-sm font-semibold text-plum mb-1">
                         Nome completo <span class="text-eggplant">*</span>
                     </label>
-                    <input type="text" id="nome" th:field="*{nome}" placeholder="Digite o nome" required
-                           class="w-full border border-olive/50 rounded-md px-3 py-2 text-sm text-taupe placeholder-taupe/40 focus:outline-none focus:ring-2 focus:ring-eggplant focus:border-eggplant">
-                    <p class="text-xs text-red-600 mt-1" th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}">
+                    <input type="text" id="username" th:field="*{username}" placeholder="Digite o usuário" required ...>
+                    <p th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Erro</p>
                         Erro no nome
                     </p>
                 </div>

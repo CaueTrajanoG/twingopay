@@ -33,6 +33,12 @@
             class="bg-sage/20 text-plum border border-sage text-sm rounded-md px-4 py-3 mb-6 text-center">
             <span th:text="${mensagem}"></span>
         </div>
+        <div th:if="${param.error}" class="bg-red-50 text-red-700 border border-red-200 text-sm rounded-md px-4 py-3 mb-6 text-center">
+            Usuário ou senha incorretos.
+        </div>
+        <div th:if="${param.logout}" class="bg-sage/20 text-plum border border-sage text-sm rounded-md px-4 py-3 mb-6 text-center">
+            Você saiu da conta.
+        </div>
 
         <form th:action="@{/login}" method="post" class="space-y-5">
             <div>
@@ -46,7 +52,7 @@
                 <label for="password" class="block text-sm font-semibold text-plum mb-1">
                     Senha
                 </label>
-                <input type="password" id="password" name="password" placeholder="Digite sua senha" required
+                <input type="password" id="senha" name="senha" placeholder="Digite sua senha" required
                     class="w-full border border-olive/50 rounded-md px-3 py-2 text-sm text-taupe placeholder-taupe/40 focus:outline-none focus:ring-2 focus:ring-eggplant focus:border-eggplant">
             </div>
             <button type="submit"

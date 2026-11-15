@@ -31,14 +31,20 @@
         <h1 class="text-2xl font-bold text-eggplant text-center mb-6">Seja bem vindo!</h1>
 
         <form th:action="@{/login}" method="post" class="space-y-5">
-            <a href="/twingopay/login">
-                <h2
-                    class="w-full bg-eggplant hover:bg-plum text-white font-semibold py-2.5 rounded-md transition-colors text-center mb-8">
-                    Login
-                </h2>
-            </a>
+    <div th:if="${param.error}" class="text-red-600 text-sm text-center">
+        Login ou senha incorretos.
+    </div>
 
-        </form>
+    <input type="text" name="username" placeholder="Usuário" required
+           class="w-full border rounded-md px-3 py-2">
+    <input type="password" name="password" placeholder="Senha" required
+           class="w-full border rounded-md px-3 py-2">
+
+    <button type="submit"
+            class="w-full bg-eggplant hover:bg-plum text-white font-semibold py-2.5 rounded-md transition-colors">
+        Login
+    </button>
+</form>
     </div>
 
 </body>

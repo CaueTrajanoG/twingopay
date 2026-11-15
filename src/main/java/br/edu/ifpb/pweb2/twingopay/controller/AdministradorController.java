@@ -1,6 +1,7 @@
 package br.edu.ifpb.pweb2.twingopay.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +16,8 @@ import jakarta.servlet.http.HttpSession;
 @Controller
 @RequestMapping("/admin")
 public class AdministradorController {
+    @Autowired
+    private PasswordEncoder passwordEncoder;
     @Autowired
     private CorrentistaRepository correntistaRepository;
 
@@ -31,6 +34,7 @@ public class AdministradorController {
 
     @PostMapping("/criarCorrentista")
     public String CriarCorrentista(Correntista correntista, RedirectAttributes attr, Model model) {
+        correntista.setSenha(passwordEncoder.encode(correntista.getSenha()));
         correntistaRepository.save(correntista);
         attr.addFlashAttribute("mensagem", "Cadastro efetuado de " + correntista.getNome() + " efetuado.");
         model.addAttribute("correntistas", correntistaRepository.findAll());
