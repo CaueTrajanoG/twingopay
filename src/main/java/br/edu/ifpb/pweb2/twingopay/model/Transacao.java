@@ -41,4 +41,8 @@ public class Transacao {
 
     @ManyToOne
     private Conta conta;
+
+    public BigDecimal getValor() {
+        return this.valor;
+    }
 }

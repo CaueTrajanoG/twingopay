@@ -9,4 +9,3 @@ public class TwingopayApplication {
 		SpringApplication.run(TwingopayApplication.class, args);
 	}
 }
-

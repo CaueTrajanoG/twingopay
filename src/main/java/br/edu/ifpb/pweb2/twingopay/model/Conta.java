@@ -62,4 +62,12 @@ public class Conta {
         return this.correntista.getId();
     }
 
+    public void setCorrentista(Correntista cor) {
+        this.correntista = cor;
+    }
+
+    public String getNumero() {
+        return this.numero;
+    }
+
 }

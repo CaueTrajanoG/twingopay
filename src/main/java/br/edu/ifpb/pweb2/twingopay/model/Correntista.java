@@ -33,6 +33,14 @@ public class Correntista {
         return this.id;
     }
 
+    public String getNome() {
+        return this.nome;
+    }
+
+    public boolean isAdmin() {
+        return this.admin;
+    }
+
     @OneToMany(mappedBy = "correntista", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Conta> contas;
 }
