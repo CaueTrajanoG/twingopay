@@ -48,7 +48,7 @@ public class CorrentistaController {
         if (correntista == null) {
             return "redirect:/login";
         }
-        model.addAttribute("contas", correntistaRepository.findById(correntista.getId()));
+        model.addAttribute("contas", contaRepository.findByCorrentista_id(correntista.getId()));
         return "correntistas/list";
     }
 
