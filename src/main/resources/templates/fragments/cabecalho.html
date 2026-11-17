@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+    <nav th:fragment="cabecalho" class="bg-eggplant text-white px-6 py-4 flex items-center justify-between">
+        <a th:if="${session.correntistaLogado.admin}" th:href="@{/admin/painelAdmin}"
+            class="bg-plum text-white text-sm font-semibold px-4 py-2 rounded-md transition-colors">
+            Painel do Administrador
+        </a>
+        <span class="text-sm text-white/80">
+            Olá, <span class="font-semibold text-white" th:text="${session.correntistaLogado.username}"></span>
+        </span>
+        <div class="flex items-center gap-4">
+            <a th:href="@{/orcamento}"
+                class="bg-plum text-white text-sm font-semibold px-4 py-2 rounded-md transition-colors">
+                📊 Ver Orçamento Anual
+            </a>
+            <a th:href="@{/logout}"
+                class="bg-plum hover:bg-white hover:text-eggplant text-white text-sm font-semibold px-4 py-2 rounded-md transition-colors">
+                Sair
+            </a>
+        </div>
+    </nav>
+</body>
+</html>

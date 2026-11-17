@@ -1,46 +1,9 @@
 <!DOCTYPE html>
-<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
-
-<head>
-    <meta charset="UTF-8">
-    <title>Twingopay - Painel do Administrador</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        sage: '#A3C68C',
-                        olive: '#879676',
-                        taupe: '#6E6662',
-                        plum: '#4F364A',
-                        eggplant: '#340735',
-                    }
-                }
-            }
-        }
-    </script>
-</head>
-
-<body class="min-h-screen bg-gray-50">
-    <nav class="bg-eggplant text-white px-6 py-4 flex items-center justify-between">
-        <a th:href="@{/correntistas/list}"
-            class="bg-plum hover:bg-white hover:text-eggplant text-white text-sm font-semibold px-4 py-2 rounded-md transition-colors">
-            Contas
-        </a>
-        <span class="text-sm text-white/80">
-            Olá, <span class="font-semibold text-white" th:text="${admin.nome}">Admin</span>
-        </span>
-        <div class="flex items-center gap-4">
-
-            <a th:href="@{/logout}"
-                class="bg-plum hover:bg-white hover:text-eggplant text-white text-sm font-semibold px-4 py-2 rounded-md transition-colors">
-                Sair
-            </a>
-        </div>
-    </nav>
-
-    <main class="max-w-5xl mx-auto px-4 py-10">
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/principal}">
+<body>
+    <main layout:fragment="conteudo" class="max-w-5xl mx-auto px-4 py-10">
         <div class="flex items-center justify-between mb-6">
             <h1 class="text-2xl font-bold text-eggplant">Painel do Administrador</h1>
 
@@ -48,24 +11,21 @@
                 class="bg-eggplant hover:bg-plum text-white text-sm font-semibold px-4 py-2 rounded-md transition-colors">
                 + Cadastrar Correntista
             </a>
-            <div th:if="${mensagem}"
-                class="bg-sage/20 text-plum border border-sage text-sm rounded-md px-4 py-3 mb-6 text-center">
-                <span th:text="${mensagem}">Correntista criado com sucesso!</span>
-            </div>
         </div>
+
         <div class="bg-white rounded-2xl shadow-md overflow-hidden">
             <table class="w-full text-sm text-left">
                 <thead class="bg-plum text-white">
                     <tr>
                         <th class="px-4 py-3">ID</th>
-                        <th class="px-4 py-3">Nome</th>
+                        <th class="px-4 py-3">Usuário</th>
                         <th class="px-4 py-3">Papel</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr th:each="correntista : ${correntistas}" class="border-b border-olive/20 hover:bg-sage/10">
                         <td class="px-4 py-3 text-taupe" th:text="${correntista.id}">1</td>
-                        <td class="px-4 py-3 text-taupe" th:text="${correntista.nome}">Nome</td>
+                        <td class="px-4 py-3 text-taupe" th:text="${correntista.username}">Usuário</td>
                         <td class="px-4 py-3">
                             <span th:if="${correntista.admin}"
                                 class="text-xs font-semibold bg-sage/30 text-eggplant px-2 py-1 rounded-full">
@@ -85,7 +45,5 @@
             </table>
         </div>
     </main>
-
 </body>
-
 </html>

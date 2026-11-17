@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head th:replace="~{fragments/head :: head(${titulo})}"></head>
+
+<body class="min-h-screen bg-gray-50">
+    <div th:replace="~{fragments/cabecalho :: cabecalho}"></div>
+
+    <div th:if="${mensagem != null}" class="max-w-5xl mx-auto px-4 pt-6">
+        <div th:text="${mensagem}"
+             class="bg-sage/20 text-plum border border-sage rounded-md px-4 py-3"></div>
+    </div>
+
+    <div layout:fragment="conteudo">
+        <h1>Conteúdo não definido para o layout!</h1>
+    </div>
+</body>
+</html>

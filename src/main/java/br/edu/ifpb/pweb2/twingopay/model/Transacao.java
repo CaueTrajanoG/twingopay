@@ -45,4 +45,8 @@ public class Transacao {
     public BigDecimal getValor() {
         return this.valor;
     }
+
+    public LocalDate getData() {
+        return this.data;
+    }
 }

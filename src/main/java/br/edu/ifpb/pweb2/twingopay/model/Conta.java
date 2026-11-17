@@ -58,6 +58,10 @@ public class Conta {
         return total;
     }
 
+    public List<Transacao> getTransacoes() {
+        return this.transacoes;
+    }
+
     public Integer getCorrentistaId() {
         return this.correntista.getId();
     }

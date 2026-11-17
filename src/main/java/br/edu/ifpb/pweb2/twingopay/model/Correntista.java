@@ -41,6 +41,14 @@ public class Correntista {
         return this.username;
     }
 
+    public String getSenha() {
+        return this.senha;
+    }
+
+    public void setSenha(String encryptSenha) {
+        this.senha = encryptSenha;
+    }
+
     public boolean isAdmin() {
         return this.admin;
     }

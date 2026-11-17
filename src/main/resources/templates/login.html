@@ -1,33 +1,15 @@
 <!DOCTYPE html>
 <html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
 
-<head>
-    <meta charset="UTF-8">
-    <title>TwingoPay - Entrar</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        sage: '#A3C68C',
-                        olive: '#879676',
-                        taupe: '#6E6662',
-                        plum: '#4F364A',
-                        eggplant: '#340735',
-                    }
-                }
-            }
-        }
-    </script>
-</head>
+<head th:replace="~{fragments/head :: head('Entrar')}"></head>
 
 <body
     class="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-sage via-taupe to-eggplant px-4 py-10">
     <p class="text-white/70 text-xs mb-8 text-center">Twingopay &mdash; controle financeiro pessoal</p>
+    <img class="max-w-[14rem] mb-8" th:src="@{/pork.svg}" alt="Logo Twingopay">
 
     <div class="w-full max-w-sm bg-white rounded-2xl shadow-xl p-8">
-        <h1 class="text-2xl font-bold text-eggplant text-center mb-6">Login</h1>
+        <h1 class="text-2xl font-bold text-eggplant text-center mb-6">Seja bem vindo!</h1>
 
         <div th:if="${mensagem}"
             class="bg-sage/20 text-plum border border-sage text-sm rounded-md px-4 py-3 mb-6 text-center">
@@ -42,16 +24,12 @@
 
         <form th:action="@{/login}" method="post" class="space-y-5">
             <div>
-                <label for="username" class="block text-sm font-semibold text-plum mb-1">
-                    Usuário
-                </label>
+                <label for="username" class="block text-sm font-semibold text-plum mb-1">Usuário</label>
                 <input type="text" id="username" name="username" placeholder="Digite seu usuário" required
                     class="w-full border border-olive/50 rounded-md px-3 py-2 text-sm text-taupe placeholder-taupe/40 focus:outline-none focus:ring-2 focus:ring-eggplant focus:border-eggplant">
             </div>
             <div>
-                <label for="password" class="block text-sm font-semibold text-plum mb-1">
-                    Senha
-                </label>
+                <label for="senha" class="block text-sm font-semibold text-plum mb-1">Senha</label>
                 <input type="password" id="senha" name="senha" placeholder="Digite sua senha" required
                     class="w-full border border-olive/50 rounded-md px-3 py-2 text-sm text-taupe placeholder-taupe/40 focus:outline-none focus:ring-2 focus:ring-eggplant focus:border-eggplant">
             </div>
@@ -60,8 +38,6 @@
                 Conecte-se
             </button>
         </form>
-        <div class="text-center mt-6 space-y-2">
-        </div>
     </div>
 
 </body>

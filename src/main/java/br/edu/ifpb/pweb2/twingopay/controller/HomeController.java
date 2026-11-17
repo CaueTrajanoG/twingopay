@@ -5,8 +5,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class HomeController {
-    @GetMapping("/home")
+    @GetMapping({ "/", "/home" })
     public String showHomepage() {
-        return "index.html";
+        return "redirect:/correntistas/list";
     }
 }

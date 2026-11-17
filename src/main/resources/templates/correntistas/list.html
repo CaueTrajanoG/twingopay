@@ -1,51 +1,9 @@
 <!DOCTYPE html>
-<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{/layouts/principal}">
 
-<head>
-    <meta charset="UTF-8">
-    <title>Twingopay - Contas</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        sage: '#A3C68C',
-                        olive: '#879676',
-                        taupe: '#6E6662',
-                        plum: '#4F364A',
-                        eggplant: '#340735',
-                    }
-                }
-            }
-        }
-    </script>
-</head>
-
-<body class="min-h-screen bg-gray-50">
-    <!--Navbar-->
-    <nav class="bg-eggplant text-white px-6 py-4 flex items-center justify-between">
-        <a th:if="${session.correntistaLogado.admin}" th:href="@{/admin/painelAdmin}"
-            class="bg-plum bg-eggplant hover: text-white text-sm font-semibold px-4 py-2 rounded-md transition-colors">
-            Painel do Administrador
-        </a>
-        <span class="text-sm text-white/80">
-            Olá, <span class="font-semibold text-white" th:text="${session.correntistaLogado.nome}"></span>
-        </span>
-        <div class="flex items-center gap-4">
-            <a th:href="@{/orcamento}"
-                class="bg-plum text-white text-sm font-semibold px-4 py-2 rounded-md transition-colors">
-                📊 Ver Orçamento Anual
-            </a>
-            <a th:href="@{/logout}"
-                class="bg-plum hover:bg-white hover:text-eggplant text-white text-sm font-semibold px-4 py-2 rounded-md transition-colors">
-                Sair
-            </a>
-        </div>
-    </nav>
-
-    <!-- Listinha com as contas desse caba-->
-    <main class="max-w-5xl mx-auto px-4 py-10">
+<body>
+    <main layout:fragment="conteudo" class="max-w-5xl mx-auto px-4 py-10">
         <div class="flex items-center justify-between mb-6">
             <h1 class="text-2xl font-bold text-eggplant">Minhas Contas</h1>
 
@@ -94,7 +52,6 @@
             </table>
         </div>
     </main>
-
 </body>
 
 </html>
