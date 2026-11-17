@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/principal}">
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layouts/principal}">
+
 <body>
     <main layout:fragment="conteudo" class="max-w-7xl mx-auto px-4 py-10">
         <div class="flex items-center justify-between mb-6">
@@ -18,12 +18,14 @@
         <div class="bg-white rounded-2xl shadow-md p-6 mb-8 flex items-center justify-between">
             <form method="get" class="flex items-center gap-4">
                 <label for="ano" class="text-sm font-semibold text-plum">Ano de Referência:</label>
-                <select id="ano" name="ano" class="border border-olive/50 rounded-md px-3 py-1.5 text-sm text-taupe focus:ring-2 focus:ring-eggplant">
+                <select id="ano" name="ano"
+                    class="border border-olive/50 rounded-md px-3 py-1.5 text-sm text-taupe focus:ring-2 focus:ring-eggplant">
                     <option th:value="2025" th:selected="${anoSelecionado == 2025}">2025</option>
                     <option th:value="2026" th:selected="${anoSelecionado == 2026}">2026</option>
                     <option th:value="2027" th:selected="${anoSelecionado == 2027}">2027</option>
                 </select>
-                <button type="submit" class="bg-eggplant hover:bg-plum text-white text-sm font-semibold px-4 py-1.5 rounded-md transition-colors">
+                <button type="submit"
+                    class="bg-eggplant hover:bg-plum text-white text-sm font-semibold px-4 py-1.5 rounded-md transition-colors">
                     Alterar Ano
                 </button>
             </form>
@@ -53,20 +55,15 @@
                 <tbody>
                     <tr th:each="cat : ${categorias}" class="border-b border-olive/20 hover:bg-sage/10">
                         <td class="px-3 py-2.5 font-medium text-eggplant" th:text="${cat.nome}">Alimentação</td>
-                        <!-- Meses de Jan a Dez  -->
-                        <td class="px-3 py-2.5 text-center text-taupe">R$ 0,00</td>
-                        <td class="px-3 py-2.5 text-center text-taupe">R$ 0,00</td>
-                        <td class="px-3 py-2.5 text-center text-taupe">R$ 0,00</td>
-                        <td class="px-3 py-2.5 text-center text-taupe">R$ 0,00</td>
-                        <td class="px-3 py-2.5 text-center text-taupe">R$ 0,00</td>
-                        <td class="px-3 py-2.5 text-center text-taupe">R$ 0,00</td>
-                        <td class="px-3 py-2.5 text-center text-taupe">R$ 0,00</td>
-                        <td class="px-3 py-2.5 text-center text-taupe">R$ 0,00</td>
-                        <td class="px-3 py-2.5 text-center text-taupe">R$ 0,00</td>
-                        <td class="px-3 py-2.5 text-center text-taupe">R$ 0,00</td>
-                        <td class="px-3 py-2.5 text-center text-taupe">R$ 0,00</td>
-                        <td class="px-3 py-2.5 text-center text-taupe">R$ 0,00</td>
-                        <td class="px-3 py-2.5 text-right font-bold text-plum">R$ 0,00</td>
+
+                        <td th:each="m : ${#numbers.sequence(0, 11)}"
+                            th:class="'px-3 py-2.5 text-center ' + (${valores[cat.id][m].signum() < 0} ? 'text-red-600' : 'text-taupe')"
+                            th:text="'R$ ' + ${#numbers.formatDecimal(valores[cat.id][m], 1, 'POINT', 2, 'COMMA')}">R$
+                            0,00</td>
+
+                        <td class="px-3 py-2.5 text-right font-bold text-plum"
+                            th:text="'R$ ' + ${#numbers.formatDecimal(valores[cat.id][12], 1, 'POINT', 2, 'COMMA')}">R$
+                            0,00</td>
                     </tr>
 
                     <!-- se não houver categorias -->
@@ -80,4 +77,5 @@
         </div>
     </main>
 </body>
+
 </html>
