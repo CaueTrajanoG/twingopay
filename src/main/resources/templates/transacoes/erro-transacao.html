@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/principal}">
+<body>
+    <main layout:fragment="conteudo" class="max-w-md mx-auto px-4 py-10">
+        <div class="bg-white rounded-2xl shadow-md p-8 text-center space-y-4">
+            <h1 class="text-xl font-bold text-eggplant">Não foi possível salvar a transação</h1>
+            <p class="text-sm text-red-700" th:text="${message}">Mensagem</p>
+            <a th:href="@{/correntistas/list}"
+               class="inline-block bg-eggplant hover:bg-plum text-white text-sm font-semibold px-4 py-2 rounded-md transition-colors">
+                Voltar às minhas contas
+            </a>
+        </div>
+    </main>
+</body>
+</html>

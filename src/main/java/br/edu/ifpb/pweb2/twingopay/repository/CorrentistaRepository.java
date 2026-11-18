@@ -11,4 +11,5 @@ import br.edu.ifpb.pweb2.twingopay.model.Correntista;
 public interface CorrentistaRepository extends JpaRepository<Correntista, Integer> {
     Optional<Correntista> findByUsername(String nome);
 
+    Boolean existsByUsername(String nome);
 }

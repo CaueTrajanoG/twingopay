@@ -49,4 +49,16 @@ public class Transacao {
     public LocalDate getData() {
         return this.data;
     }
+
+    public Categoria getCategoria() {
+        return this.categoria;
+    }
+
+    public Integer getId() {
+        return this.id;
+    }
+
+    public Movimento getMovimento() {
+        return this.movimento;
+    }
 }

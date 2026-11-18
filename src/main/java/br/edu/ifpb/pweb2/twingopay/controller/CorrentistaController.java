@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import br.edu.ifpb.pweb2.twingopay.exception.AcessoNegadoException;
+import br.edu.ifpb.pweb2.twingopay.exception.RecursoNaoEncontradoException;
 import br.edu.ifpb.pweb2.twingopay.model.Conta;
 import br.edu.ifpb.pweb2.twingopay.model.Correntista;
 import br.edu.ifpb.pweb2.twingopay.model.Transacao;
@@ -74,8 +76,12 @@ public class CorrentistaController {
         }
 
         Optional<Conta> contaOpt = contaRepository.findById(id);
-        if (contaOpt.isEmpty() || !contaOpt.get().getCorrentistaId().equals(correntista.getId())) {
-            return "redirect:/correntistas/list";
+        if (contaOpt.isEmpty()) {
+            throw new RecursoNaoEncontradoException("Conta não encontrada");
+        }
+
+        if (!contaOpt.get().getCorrentistaId().equals(correntista.getId())) {
+            throw new AcessoNegadoException("Você não tem acesso a essa conta");
         }
 
         Conta conta = contaOpt.get();

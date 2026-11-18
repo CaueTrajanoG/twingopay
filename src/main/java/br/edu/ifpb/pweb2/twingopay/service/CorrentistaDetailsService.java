@@ -22,7 +22,7 @@ public class CorrentistaDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) {
         Correntista c = repo.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException(username));
-        return User.withUsername(c.getUsername())
+        return User.withUsername(c.getNome())
                 .password(c.getSenha())
                 .roles(c.isAdmin() ? "ADMIN" : "USER")
                 .build();
