@@ -1,7 +1,10 @@
 package br.edu.ifpb.pweb2.twingopay.controller;
 
 import java.time.LocalDate;
+import java.time.YearMonth;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -17,9 +20,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import br.edu.ifpb.pweb2.twingopay.model.Comentario;
 import br.edu.ifpb.pweb2.twingopay.model.Conta;
 import br.edu.ifpb.pweb2.twingopay.model.Correntista;
 import br.edu.ifpb.pweb2.twingopay.model.Transacao;
+import br.edu.ifpb.pweb2.twingopay.repository.ComentarioRepository;
 import br.edu.ifpb.pweb2.twingopay.repository.ContaRepository;
 import br.edu.ifpb.pweb2.twingopay.repository.CorrentistaRepository;
 import jakarta.servlet.http.HttpSession;
@@ -27,6 +32,10 @@ import jakarta.servlet.http.HttpSession;
 @Controller
 @RequestMapping("/correntistas")
 public class CorrentistaController {
+
+    @Autowired
+    private ComentarioRepository comentarioRepository;
+
     @Autowired
     private PasswordEncoder passwordEncoder;
 
@@ -79,14 +88,34 @@ public class CorrentistaController {
         }
 
         Conta conta = contaOpt.get();
+
+        if (dataInicio == null && dataFim == null) {
+            YearMonth mesAtual = YearMonth.now();
+            dataInicio = mesAtual.atDay(1);
+            dataFim = mesAtual.atEndOfMonth();
+        }
+
+        LocalDate inicioFiltro = dataInicio;
+        LocalDate fimFiltro = dataFim;
+
         List<Transacao> transacoesFiltradas = conta.getTransacoes();
 
-        if (dataInicio != null && dataFim != null) {
+        if (inicioFiltro != null && fimFiltro != null) {
             transacoesFiltradas = transacoesFiltradas.stream()
-                    .filter(t -> t.getData() != null && !t.getData().isBefore(dataInicio)
-                            && !t.getData().isAfter(dataFim))
+                    .filter(t -> t.getData() != null
+                            && !t.getData().isBefore(inicioFiltro)
+                            && !t.getData().isAfter(fimFiltro))
                     .collect(Collectors.toList());
         }
+
+        Map<Integer, Comentario> comentarios = new HashMap<>();
+
+        for (Transacao t : transacoesFiltradas) {
+            comentarioRepository.findByTransacao_Id(t.getId())
+                    .ifPresent(comentario -> comentarios.put(t.getId(), comentario));
+        }
+
+        model.addAttribute("comentarios", comentarios);
 
         model.addAttribute("conta", conta);
         model.addAttribute("transacoes", transacoesFiltradas);
