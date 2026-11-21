@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.edu.ifpb.pweb2.twingopay.enuns.Movimento;
+import br.edu.ifpb.pweb2.twingopay.exception.DadosInvalidosException;
 import br.edu.ifpb.pweb2.twingopay.model.Conta;
 import br.edu.ifpb.pweb2.twingopay.model.Transacao;
 import br.edu.ifpb.pweb2.twingopay.repository.CategoriaRepository;
@@ -60,6 +61,12 @@ public class TransacaoController {
 
     @PostMapping("/salvar")
     public String salvarTransacao(Transacao transacao, RedirectAttributes redirectAttributes) {
+        if (transacao.getValor() == null || transacao.getValor().signum() <= 0) {
+            throw new DadosInvalidosException("O valor da transação deve ser maior que zero.");
+        }
+        if (transacao.getData() == null) {
+            throw new DadosInvalidosException("Informe a data da transação.");
+        }
         transacaoRepository.save(transacao);
         redirectAttributes.addFlashAttribute("mensagem", "Transação salva!");
         return "redirect:/correntistas/contas/" + transacao.getConta().getId();
