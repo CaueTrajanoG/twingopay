@@ -95,7 +95,8 @@
                 </thead>
                 <tbody>
                     <!-- Uma linha por transação -->
-                    <tr th:each="t : ${transacoes}" class="border-b border-olive/20 hover:bg-sage/10">
+                    <tr th:each="t : ${transacoes}" 
+                    th:class="'border-b border-olive/20 hover:bg-sage/10'">
                         <td class="px-4 py-3 text-taupe" th:text="${t.data}">2026-11-16</td>
                         <td class="px-4 py-3">
                             <span class="text-xs font-semibold bg-olive/20 text-plum px-2 py-1 rounded-full"
@@ -113,8 +114,10 @@
                             <div class="flex justify-center items-center gap-2">
                                 <a th:href="@{/transacoes/editar/{id}(id=${t.id})}"
                                     class="text-olive hover:text-eggplant" title="Editar">✏️</a>
-                                <a th:href="@{/comentarios/transacao/{id}(id=${t.id})}"
-                                    class="text-olive hover:text-eggplant text-base" title="Comentário">💬</a>
+                                <a th:if="${comentarios.containsKey(t.id)}"
+                                    th:href="@{/comentarios/transacao/{id}(id=${t.id})}"
+                                    class="text-olive hover:text-eggplant text-base"
+                                    title="Visualizar comentário">💬</a>
                             </div>
                         </td>
                     </tr>
